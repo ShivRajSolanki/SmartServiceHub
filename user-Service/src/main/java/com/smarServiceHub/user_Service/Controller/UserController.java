@@ -1,5 +1,6 @@
 package com.smarServiceHub.user_Service.Controller;
 
+import com.smarServiceHub.user_Service.DTO.LoginRequest;
 import com.smarServiceHub.user_Service.DTO.RegisterRequest;
 import com.smarServiceHub.user_Service.Entity.User;
 import com.smarServiceHub.user_Service.Service.UserService;
@@ -23,6 +24,11 @@ public class UserController {
     public ResponseEntity<User> Register(@RequestBody RegisterRequest request){
         User savedUser = userService.registerUser(request);
         return ResponseEntity.ok(savedUser);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<User> Login(@RequestBody LoginRequest request){
+        User user = userService.loginUser(request);
+        return ResponseEntity.ok(user);
     }
 
 
