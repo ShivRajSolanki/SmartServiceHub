@@ -4,6 +4,7 @@ import com.smarServiceHub.user_Service.DTO.LoginRequest;
 import com.smarServiceHub.user_Service.DTO.RegisterRequest;
 import com.smarServiceHub.user_Service.Entity.User;
 import com.smarServiceHub.user_Service.Repository.UserRepository;
+import com.smarServiceHub.user_Service.Security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +20,8 @@ public class UserServiceImp  implements  UserService{
    private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public User registerUser(RegisterRequest request){
@@ -34,13 +37,13 @@ public class UserServiceImp  implements  UserService{
         return userRepository.save(user);
     }
     @Override
-    public User loginUser(LoginRequest request) {
+    public String loginUser(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
 
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
         }
-        return user;
+        return jwtUtil.generateToken(user.getEmail());
     }
 
 }

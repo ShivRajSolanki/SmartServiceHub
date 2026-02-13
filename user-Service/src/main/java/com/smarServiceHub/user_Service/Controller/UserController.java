@@ -26,9 +26,9 @@ public class UserController {
         return ResponseEntity.ok(savedUser);
     }
     @PostMapping("/login")
-    public ResponseEntity<User> Login(@RequestBody LoginRequest request){
-        User user = userService.loginUser(request);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<String> Login(@RequestBody LoginRequest request){
+        String token = userService.loginUser(request);
+        return ResponseEntity.ok(token);
     }
 
 
