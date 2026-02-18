@@ -30,6 +30,11 @@ public class UserController {
         String token = userService.loginUser(request);
         return ResponseEntity.ok(token);
     }
+    @GetMapping("/profile")
+    public String profile() {
+        return "This is protected profile data";
+    }
+
 
 
 }
