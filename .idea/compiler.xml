@@ -7,8 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
-        <module name="eureka-server" />
         <module name="user-Service" />
+        <module name="eureka-server" />
+        <module name="service-catalog-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="service-catalog-service" options="-parameters" />
       <module name="user-Service" options="-parameters" />
     </option>
   </component>
