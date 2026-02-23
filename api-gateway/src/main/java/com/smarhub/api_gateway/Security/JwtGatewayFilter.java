@@ -20,6 +20,7 @@ public class JwtGatewayFilter implements GlobalFilter {
         String path = exchange.getRequest().getURI().getPath();
         System.out.println("Incoming Path: " + path);
 
+
         // Allow login & register without token
         if (path.startsWith("/users/login") || path.startsWith("/users/register")) {
             System.out.println("Bypass condition hit");
@@ -41,6 +42,18 @@ public class JwtGatewayFilter implements GlobalFilter {
         if (!jwtUtil.validateToken(token)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
+        }
+        String role = jwtUtil.extractRole(token);
+        System.out.println("Extracted Role: " + role);
+
+        // 🔥 RBAC CHECK HERE
+        if (path.contains("/services") &&
+                exchange.getRequest().getMethod().name().equals("POST")) {
+
+            if (!"ADMIN".equals(role)) {
+                exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                return exchange.getResponse().setComplete();
+            }
         }
 
         return chain.filter(exchange);

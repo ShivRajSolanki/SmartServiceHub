@@ -43,7 +43,7 @@ public class UserServiceImp  implements  UserService{
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
         }
-        return jwtUtil.generateToken(user.getEmail());
+        return jwtUtil.generateToken(user.getEmail(), user.getRole());
     }
 
 }
