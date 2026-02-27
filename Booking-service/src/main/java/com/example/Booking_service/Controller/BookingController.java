@@ -16,9 +16,10 @@ public class BookingController {
     private BookingService bookingService;
 
 
+
     @PostMapping
     public Booking createBooking(
-            @RequestParam String userEmail,
+            @RequestHeader("X-User-Email") String userEmail,
             @RequestParam Long serviceId) {
 
         return bookingService.createBooking(userEmail, serviceId);

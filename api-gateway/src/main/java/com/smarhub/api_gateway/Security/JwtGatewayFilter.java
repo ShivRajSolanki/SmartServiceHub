@@ -44,7 +44,15 @@ public class JwtGatewayFilter implements GlobalFilter {
             return exchange.getResponse().setComplete();
         }
         String role = jwtUtil.extractRole(token);
-        System.out.println("Extracted Role: " + role);
+        String email = jwtUtil.extractEmail(token);
+
+// Inject email in header
+        exchange = exchange.mutate()
+                .request(exchange.getRequest()
+                        .mutate()
+                        .header("X-User-Email", email)
+                        .build())
+                .build();
 
         // 🔥 RBAC CHECK HERE
         if (path.contains("/services") &&
