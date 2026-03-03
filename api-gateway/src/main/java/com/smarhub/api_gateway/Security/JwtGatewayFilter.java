@@ -51,6 +51,7 @@ public class JwtGatewayFilter implements GlobalFilter {
                 .request(exchange.getRequest()
                         .mutate()
                         .header("X-User-Email", email)
+                        .header("X-User-Role", role)
                         .build())
                 .build();
 

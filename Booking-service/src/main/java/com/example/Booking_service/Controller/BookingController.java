@@ -29,4 +29,24 @@ public class BookingController {
     public List<Booking> getBookings(@RequestParam String userEmail) {
         return bookingService.getUserBookings(userEmail);
     }
+
+    @PutMapping("/{id}/confirm")
+    public Booking confirmBooking(
+            @PathVariable Long id,
+            @RequestHeader("X-User-Role") String role) {
+
+        if (!role.equals("ADMIN")) {
+            throw new RuntimeException("Only ADMIN can confirm booking");
+        }
+
+        return bookingService.confirmBooking(id);
+    }
+
+    @PutMapping("/{id}/cancel")
+    public Booking cancelBooking(
+            @PathVariable Long id,
+            @RequestHeader("X-User-Email") String email) {
+
+        return bookingService.cancelBooking(id, email);
+    }
 }

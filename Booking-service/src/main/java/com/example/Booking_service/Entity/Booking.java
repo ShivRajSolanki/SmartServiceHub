@@ -1,10 +1,8 @@
 package com.example.Booking_service.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.Booking_service.Model.BookingStatus;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +16,8 @@ public class Booking {
 
     private Long serviceId;
 
-    private String status; // PENDING, ACCEPTED, COMPLETED
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status; // PENDING, ACCEPTED, COMPLETED
 
     private LocalDateTime bookingDate;
 
@@ -46,11 +45,11 @@ public class Booking {
         this.serviceId = serviceId;
     }
 
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
     }
 

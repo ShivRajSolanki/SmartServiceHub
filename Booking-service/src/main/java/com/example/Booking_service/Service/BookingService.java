@@ -9,4 +9,6 @@ import java.util.List;
 public interface BookingService {
     Booking createBooking(String userEmail, Long serviceId);
     List<Booking> getUserBookings(String userEmail);
+    Booking confirmBooking(Long id);
+    public Booking cancelBooking(Long id, String email);
 }
