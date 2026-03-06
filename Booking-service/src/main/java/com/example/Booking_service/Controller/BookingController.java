@@ -17,7 +17,7 @@ public class BookingController {
 
 
 
-    @PostMapping
+    @PostMapping("/createBooking")
     public Booking createBooking(
             @RequestHeader("X-User-Email") String userEmail,
             @RequestParam Long serviceId) {
@@ -25,10 +25,10 @@ public class BookingController {
         return bookingService.createBooking(userEmail, serviceId);
     }
 
-    @GetMapping
-    public List<Booking> getBookings(@RequestParam String userEmail) {
-        return bookingService.getUserBookings(userEmail);
-    }
+   // @GetMapping
+    //public List<Booking> getBookings(@RequestParam String userEmail) {
+     //   return bookingService.getUserBookings(userEmail);
+    //}
 
     @PutMapping("/{id}/confirm")
     public Booking confirmBooking(
@@ -48,5 +48,12 @@ public class BookingController {
             @RequestHeader("X-User-Email") String email) {
 
         return bookingService.cancelBooking(id, email);
+    }
+    @GetMapping("/booking")
+    public List<Booking> getBookings(
+            @RequestHeader("X-User-Email") String email,
+            @RequestHeader("X-User-Role") String role) {
+
+        return bookingService.getBookings(email, role);
     }
 }

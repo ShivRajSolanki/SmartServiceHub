@@ -75,6 +75,14 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         return bookingRepository.save(booking);
     }
+    public List<Booking> getBookings(String email, String role) {
+
+        if (role.equals("ADMIN")) {
+            return bookingRepository.findAll();
+        }
+
+        return bookingRepository.findByUserEmail(email);
+    }
 
 
 
