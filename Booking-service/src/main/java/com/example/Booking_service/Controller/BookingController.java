@@ -1,6 +1,7 @@
 package com.example.Booking_service.Controller;
 
 
+import com.example.Booking_service.DTO.BookingDTO;
 import com.example.Booking_service.Entity.Booking;
 import com.example.Booking_service.Service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class BookingController {
         return bookingService.cancelBooking(id, email);
     }
     @GetMapping("/booking")
-    public List<Booking> getBookings(
+    public List<BookingDTO> getBookings(
             @RequestHeader("X-User-Email") String email,
             @RequestHeader("X-User-Role") String role) {
 

@@ -1,5 +1,6 @@
 package com.example.Booking_service.Service;
 
+import com.example.Booking_service.DTO.BookingDTO;
 import com.example.Booking_service.Entity.Booking;
 import org.springframework.stereotype.Component;
 
@@ -11,5 +12,5 @@ public interface BookingService {
     List<Booking> getUserBookings(String userEmail);
     Booking confirmBooking(Long id);
     public Booking cancelBooking(Long id, String email);
-    public List<Booking> getBookings(String email, String role);
+    public List<BookingDTO> getBookings(String email, String role);
 }

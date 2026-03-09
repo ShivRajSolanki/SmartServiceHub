@@ -1,6 +1,7 @@
 package com.example.Booking_service.ServiceImpl;
 
 import com.example.Booking_service.Client.ServiceCatalogClient;
+import com.example.Booking_service.DTO.BookingDTO;
 import com.example.Booking_service.Entity.Booking;
 import com.example.Booking_service.Exception.ServiceNotFoundException;
 import com.example.Booking_service.Model.BookingStatus;
@@ -75,13 +76,31 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         return bookingRepository.save(booking);
     }
-    public List<Booking> getBookings(String email, String role) {
+    @Override
+    public List<BookingDTO> getBookings(String email, String role) {
 
-        if (role.equals("ADMIN")) {
-            return bookingRepository.findAll();
+        List<Booking> bookings;
+
+        if(role.equals("ADMIN")){
+            bookings = bookingRepository.findAll();
+        } else {
+            bookings = bookingRepository.findByUserEmail(email);
         }
 
-        return bookingRepository.findByUserEmail(email);
+        return bookings.stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+    public BookingDTO convertToDTO(Booking booking) {
+
+        BookingDTO dto = new BookingDTO();
+
+        dto.setId(booking.getId());
+        dto.setServiceId(booking.getServiceId());
+        dto.setStatus(booking.getStatus().name());
+        dto.setBookingDate(booking.getBookingDate());
+
+        return dto;
     }
 
 
